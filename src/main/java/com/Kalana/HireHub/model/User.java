@@ -1,14 +1,12 @@
 package com.Kalana.HireHub.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Entity(name = "users")
 @NoArgsConstructor
@@ -19,16 +17,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
-    @NotNull
+    @Column(nullable = false)
     private String firstName;
 
-    @NotNull
+    @Column(nullable = false)
     private String lastName;
 
-    @NotNull
+    @Column(nullable = false)
     @Email
     private String email;
 
-    @NotNull
+    @Column(nullable = false)
     private String password;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> userRoles;
 }

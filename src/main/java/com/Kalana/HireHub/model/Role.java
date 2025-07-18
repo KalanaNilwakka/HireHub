@@ -2,7 +2,6 @@ package com.Kalana.HireHub.model;
 
 import com.Kalana.HireHub.model.enums.UserRole;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long roleId;
 
-    @NotNull
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 }
