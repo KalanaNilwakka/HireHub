@@ -15,9 +15,16 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long applicationId;
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    private Long jobId;
+    @ManyToOne
+    @JoinColumn(name = "job_id")
+    private Job job;
+
+    @Column(nullable = false)
+    private String resumeLink;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

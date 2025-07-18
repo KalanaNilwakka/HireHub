@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,4 +24,7 @@ public class Job {
 
     @Column(nullable = false)
     private int numberOfPositions;
+
+    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
+    private Set<Application> applications;
 }
