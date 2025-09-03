@@ -7,6 +7,8 @@ import com.Kalana.HireHub.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,5 +26,12 @@ public class UserServiceImpl implements UserService {
         User user = modelMapper.map(userDTO,User.class);
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         return modelMapper.map(userRepository.save(user),UserDTO.class);
+    }
+
+    public Set<UserDTO> getUsers() {
+        return userRepository.findAll().stream().map(
+                user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toSet()
+        );
     }
 }
