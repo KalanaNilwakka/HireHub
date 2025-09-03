@@ -5,10 +5,8 @@ import com.Kalana.HireHub.dto.UserDTO;
 import com.Kalana.HireHub.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.Set;
 
 @Controller
 @RestController
@@ -24,6 +22,13 @@ public class UserController {
     public ResponseEntity<CRUDRepositoryDTO<UserDTO>> createUser(@RequestBody UserDTO userDTO){
         return ResponseEntity.ok(new CRUDRepositoryDTO<>(
                 true,"User created successfully!",userService.createUser(userDTO)
+        ));
+    }
+
+    @GetMapping
+    public ResponseEntity<CRUDRepositoryDTO<Set<UserDTO>>> getAllUsers(){
+        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
+                true,"User list retrieved successfully", userService.getUsers()
         ));
     }
 }
