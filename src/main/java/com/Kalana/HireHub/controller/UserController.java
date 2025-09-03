@@ -31,4 +31,11 @@ public class UserController {
                 true,"User list retrieved successfully", userService.getUsers()
         ));
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<CRUDRepositoryDTO<UserDTO>> getUserById(@PathVariable("userId") Long userId){
+        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
+                true,"User found", userService.getUserById(userId)
+        ));
+    }
 }
