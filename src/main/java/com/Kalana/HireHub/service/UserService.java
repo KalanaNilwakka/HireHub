@@ -9,4 +9,5 @@ public interface UserService {
     UserDTO createUser(UserDTO userDTO);
     Set<UserDTO> getUsers();
     UserDTO getUserById(Long id);
+    UserDTO getUserByEmail(String email);
 }

@@ -41,4 +41,10 @@ public class UserServiceImpl implements UserService {
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
+
+    public UserDTO getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .orElseThrow(() -> new UserNotFoundException(email));
+    }
 }
