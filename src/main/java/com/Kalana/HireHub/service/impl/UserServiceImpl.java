@@ -8,8 +8,6 @@ import com.Kalana.HireHub.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,16 +30,15 @@ public class UserServiceImpl implements UserService {
     }
 
     public Set<UserDTO> getUsers() {
-        return userRepository.findAll().stream().map(
-                user -> modelMapper.map(user, UserDTO.class))
+        return userRepository.findAll()
+                .stream().map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toSet()
         );
     }
 
     public UserDTO getUserById(Long id) {
-        if (userRepository.findById(id).isPresent())
-                return modelMapper.map(userRepository.findById(id).get(),UserDTO.class);
-        else
-            throw new UserNotFoundException(id);
+        return userRepository.findById(id)
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 }
