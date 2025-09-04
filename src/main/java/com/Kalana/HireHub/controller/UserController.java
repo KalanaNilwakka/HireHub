@@ -38,11 +38,4 @@ public class UserController {
                 true,"User found", userService.getUserById(userId)
         ));
     }
-
-    @GetMapping("/{email}")
-    public ResponseEntity<CRUDRepositoryDTO<UserDTO>> getUserByEmail(@PathVariable String email){
-        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
-                true,"User found", userService.getUserByEmail(email)
-        ));
-    }
 }
