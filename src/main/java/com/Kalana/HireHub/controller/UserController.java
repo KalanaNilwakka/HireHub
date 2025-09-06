@@ -1,6 +1,7 @@
 package com.Kalana.HireHub.controller;
 
 import com.Kalana.HireHub.dto.CRUDRepositoryDTO;
+import com.Kalana.HireHub.dto.UpdateUserDTO;
 import com.Kalana.HireHub.dto.UserDTO;
 import com.Kalana.HireHub.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,13 @@ public class UserController {
     public ResponseEntity<CRUDRepositoryDTO<UserDTO>> createUser(@RequestBody UserDTO userDTO){
         return ResponseEntity.ok(new CRUDRepositoryDTO<>(
                 true,"User created successfully!",userService.createUser(userDTO)
+        ));
+    }
+
+    @PatchMapping
+    public ResponseEntity<CRUDRepositoryDTO<UserDTO>> updateUser(@RequestBody UpdateUserDTO updateUserDTO){
+        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
+                true,"User updated successfully", userService.updateUser(updateUserDTO)
         ));
     }
 
