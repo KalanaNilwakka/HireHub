@@ -1,5 +1,6 @@
 package com.Kalana.HireHub.service.impl;
 
+import com.Kalana.HireHub.dto.UpdateUserDTO;
 import com.Kalana.HireHub.dto.UserDTO;
 import com.Kalana.HireHub.exception.UserNotFoundException;
 import com.Kalana.HireHub.model.User;
@@ -26,6 +27,16 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTO userDTO){
         User user = modelMapper.map(userDTO,User.class);
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        return modelMapper.map(userRepository.save(user),UserDTO.class);
+    }
+
+    public UserDTO updateUser (UpdateUserDTO updateUserDTO){
+        User user = userRepository.findById(updateUserDTO.getUserId())
+                .orElseThrow(() -> new UserNotFoundException(updateUserDTO.getUserId()));
+        if (updateUserDTO.getFirstName() != null)
+            user.setFirstName(updateUserDTO.getFirstName());
+        if (updateUserDTO.getLastName() != null)
+            user.setLastName(updateUserDTO.getLastName());
         return modelMapper.map(userRepository.save(user),UserDTO.class);
     }
 
