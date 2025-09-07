@@ -23,6 +23,5 @@ public class JobDTO {
     @NotNull
     private int numberOfPositions;
 
-    @NotNull
     private Set<Application>  applications;
 }
