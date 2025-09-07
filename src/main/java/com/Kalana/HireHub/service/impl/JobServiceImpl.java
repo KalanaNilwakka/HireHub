@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class JobServiceImpl implements JobService {
@@ -24,5 +26,11 @@ public class JobServiceImpl implements JobService {
         Job job= modelMapper.map(jobDTO, Job.class);
         job.setApplications(new HashSet<>());
         return modelMapper.map(jobRepository.save(job), JobDTO.class);
+    }
+
+    public Set<JobDTO> getAllJobs() {
+        return jobRepository.findAll().stream()
+                .map(job -> modelMapper.map(job,JobDTO.class))
+                .collect(Collectors.toSet());
     }
 }
