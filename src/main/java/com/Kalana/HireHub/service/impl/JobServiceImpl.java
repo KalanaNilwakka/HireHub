@@ -1,9 +1,13 @@
 package com.Kalana.HireHub.service.impl;
 
+import com.Kalana.HireHub.dto.JobDTO;
+import com.Kalana.HireHub.model.Job;
 import com.Kalana.HireHub.repository.JobRepository;
 import com.Kalana.HireHub.service.JobService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 
 @Service
 public class JobServiceImpl implements JobService {
@@ -14,5 +18,11 @@ public class JobServiceImpl implements JobService {
     public JobServiceImpl(JobRepository jobRepository, ModelMapper modelMapper) {
         this.jobRepository = jobRepository;
         this.modelMapper = modelMapper;
+    }
+
+    public JobDTO createJob(JobDTO jobDTO) {
+        Job job= modelMapper.map(jobDTO, Job.class);
+        job.setApplications(new HashSet<>());
+        return modelMapper.map(jobRepository.save(job), JobDTO.class);
     }
 }
