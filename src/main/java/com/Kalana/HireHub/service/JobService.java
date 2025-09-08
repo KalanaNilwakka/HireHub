@@ -7,4 +7,5 @@ import java.util.Set;
 public interface JobService {
     JobDTO createJob(JobDTO jobDTO);
     Set<JobDTO> getAllJobs();
+    JobDTO getJobById(Long jobId);
 }

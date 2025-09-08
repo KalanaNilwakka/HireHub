@@ -1,6 +1,7 @@
 package com.Kalana.HireHub.service.impl;
 
 import com.Kalana.HireHub.dto.JobDTO;
+import com.Kalana.HireHub.exception.JobNotFoundException;
 import com.Kalana.HireHub.model.Job;
 import com.Kalana.HireHub.repository.JobRepository;
 import com.Kalana.HireHub.service.JobService;
@@ -32,5 +33,11 @@ public class JobServiceImpl implements JobService {
         return jobRepository.findAll().stream()
                 .map(job -> modelMapper.map(job,JobDTO.class))
                 .collect(Collectors.toSet());
+    }
+
+    public JobDTO getJobById(Long jobId) {
+        return jobRepository.findById(jobId)
+                .map(job -> modelMapper.map(job, JobDTO.class))
+                .orElseThrow(() -> new JobNotFoundException(jobId));
     }
 }
