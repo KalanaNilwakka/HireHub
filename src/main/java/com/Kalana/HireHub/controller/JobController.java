@@ -32,4 +32,11 @@ public class JobController {
                 true, "Jobs retrieved successfully",  jobService.getAllJobs()
         ));
     }
+
+    @GetMapping("/{jobId}")
+    public ResponseEntity<CRUDRepositoryDTO<JobDTO>> getJob(@PathVariable("jobId") Long jobId) {
+        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
+                true, "Job retrieved successfully",  jobService.getJobById(jobId)
+        ));
+    }
 }
