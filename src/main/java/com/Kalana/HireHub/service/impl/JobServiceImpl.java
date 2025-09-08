@@ -40,4 +40,10 @@ public class JobServiceImpl implements JobService {
                 .map(job -> modelMapper.map(job, JobDTO.class))
                 .orElseThrow(() -> new JobNotFoundException(jobId));
     }
+
+    public Set<JobDTO> getAvailableJobs(){
+        return jobRepository.getJobsByNumberOfPositionsGreaterThan(0).stream()
+                .map(job -> modelMapper.map(job,JobDTO.class))
+                .collect(Collectors.toSet());
+    }
 }

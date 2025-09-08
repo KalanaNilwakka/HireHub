@@ -8,4 +8,5 @@ public interface JobService {
     JobDTO createJob(JobDTO jobDTO);
     Set<JobDTO> getAllJobs();
     JobDTO getJobById(Long jobId);
+    Set<JobDTO> getAvailableJobs();
 }
