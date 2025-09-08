@@ -39,4 +39,11 @@ public class JobController {
                 true, "Job retrieved successfully",  jobService.getJobById(jobId)
         ));
     }
+
+    @GetMapping("/available")
+    public ResponseEntity<CRUDRepositoryDTO<Set<JobDTO>>> getAvailableJobs() {
+        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
+                true, "Jobs retrieved successfully",  jobService.getAvailableJobs()
+        ));
+    }
 }
