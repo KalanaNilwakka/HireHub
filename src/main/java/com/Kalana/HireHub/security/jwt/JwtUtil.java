@@ -28,4 +28,8 @@ public class JwtUtil {
                 .getPayload()
                 .getSubject();
     }
+
+    public boolean validateToken(String token, UserDetails userDetails){
+        return extractUsername(token).equals(userDetails.getUsername());
+    }
 }
