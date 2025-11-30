@@ -5,11 +5,9 @@ import com.Kalana.HireHub.dto.UpdateUserDTO;
 import com.Kalana.HireHub.dto.UserDTO;
 import com.Kalana.HireHub.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
-@Controller
 @RestController
 @RequestMapping("/api/users")
 public class UserController {

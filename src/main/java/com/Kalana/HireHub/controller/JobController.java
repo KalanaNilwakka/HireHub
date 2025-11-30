@@ -4,13 +4,11 @@ import com.Kalana.HireHub.dto.CRUDRepositoryDTO;
 import com.Kalana.HireHub.dto.JobDTO;
 import com.Kalana.HireHub.service.JobService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
 @RestController
-@Controller
 @RequestMapping("/api/jobs")
 public class JobController {
     private final JobService jobService;
