@@ -17,5 +17,5 @@ public class Role {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private UserRole name;
 }
