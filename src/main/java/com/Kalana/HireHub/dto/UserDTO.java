@@ -28,6 +28,5 @@ public class UserDTO {
     @NotNull
     private String password;
 
-    @NotNull
     private Set<Role> userRoles;
 }
