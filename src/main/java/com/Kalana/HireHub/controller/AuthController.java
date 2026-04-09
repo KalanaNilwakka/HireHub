@@ -12,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -41,6 +43,10 @@ public class AuthController {
         final CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         final String token = jwtUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new AuthResponseDTO(token));
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .toList();
+
+        return ResponseEntity.ok(new AuthResponseDTO(token,roles));
     }
 }
