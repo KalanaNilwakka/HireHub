@@ -23,18 +23,15 @@ import java.util.List;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final CustomUserDetailsService customUserDetailsService;
     private final JwtUtil jwtUtil;
     private final UserService userService;
 
     public AuthController(
             AuthenticationManager authenticationManager,
-            CustomUserDetailsService customUserDetailsService,
             JwtUtil jwtUtil,
             UserService userService
     ) {
         this.authenticationManager = authenticationManager;
-        this.customUserDetailsService = customUserDetailsService;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
     }
@@ -57,5 +54,12 @@ public class AuthController {
         return ResponseEntity.ok(new CRUDRepositoryDTO<>(
                 true,"User logged in successfully",new AuthResponseDTO(token,roles))
         );
+    }
+
+    @PostMapping("signup")
+    public ResponseEntity<CRUDRepositoryDTO<UserDTO>> signup(@RequestBody UserDTO userDTO){
+        return new ResponseEntity<>(new CRUDRepositoryDTO<>(
+                true,"User signed up successfully", userService.createUser(userDTO)
+        ), HttpStatus.CREATED);
     }
 }
