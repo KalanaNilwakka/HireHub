@@ -6,7 +6,6 @@ import com.Kalana.HireHub.dto.CRUDRepositoryDTO;
 import com.Kalana.HireHub.dto.UserDTO;
 import com.Kalana.HireHub.security.jwt.JwtUtil;
 import com.Kalana.HireHub.security.user.CustomUserDetails;
-import com.Kalana.HireHub.security.user.CustomUserDetailsService;
 import com.Kalana.HireHub.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
