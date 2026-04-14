@@ -24,17 +24,17 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public String storeFile(MultipartFile file, String jobId) throws IOException {
+    public String storeFile(MultipartFile resume, Long jobId) throws IOException {
 
         File dir = new File(uploadDir);
 
         if (!dir.exists())
-            dir.mkdir();
+            dir.mkdirs();
 
-        String fileName = commonUtils.getLoggedInUser().getUsername() + "_" + jobId + "_" + file.getOriginalFilename();
+        String fileName = commonUtils.getLoggedInUser().getUsername() + "_" + jobId + "_" + resume.getOriginalFilename();
         Path path = Paths.get(uploadDir,fileName);
 
-        Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(resume.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
 
         return path.toString();
     }
