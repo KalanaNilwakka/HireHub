@@ -1,6 +1,5 @@
 package com.Kalana.HireHub.dto;
 
-import com.Kalana.HireHub.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -28,6 +27,5 @@ public class UserDTO {
     @NotNull
     private String password;
 
-    @NotNull
-    private Set<Role> userRoles;
+    private Set<String> userRoles;
 }

@@ -45,7 +45,7 @@ public class UserController {
         ));
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/username/{email}")
     public ResponseEntity<CRUDRepositoryDTO<UserDTO>> getUserByEmail(@PathVariable("email") String email){
         return ResponseEntity.ok(new CRUDRepositoryDTO<>(
                 true,"User found", userService.getUserByEmail(email)

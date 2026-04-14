@@ -1,7 +1,7 @@
 package com.Kalana.HireHub.model.enums;
 
 public enum UserRole {
-    ADMIN,
-    USER,
-    HR
+    ROLE_ADMIN,
+    ROLE_USER,
+    ROLE_HR
 }
