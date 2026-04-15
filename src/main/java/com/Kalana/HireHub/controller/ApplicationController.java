@@ -27,4 +27,11 @@ public class ApplicationController {
                 true,"Applied for the job successfully",applicationService.apply(jobId,resume)
         ), HttpStatus.CREATED);
     }
+
+    @PutMapping("/status")
+    public ResponseEntity<CRUDRepositoryDTO<ApplicationDTO>> changeStatus(@RequestBody ApplicationDTO applicationDTO){
+        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
+                true,"Application status successfully updated",applicationService.changeStatus(applicationDTO)
+        ));
+    }
 }
