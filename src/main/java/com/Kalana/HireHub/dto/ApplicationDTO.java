@@ -1,6 +1,5 @@
 package com.Kalana.HireHub.dto;
 
-import com.Kalana.HireHub.model.enums.ApplicationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +18,5 @@ public class ApplicationDTO {
 
     private String resumeLink;
 
-    private ApplicationStatus applicationStatus;
+    private String applicationStatus;
 }
