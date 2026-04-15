@@ -18,4 +18,18 @@ public class Role {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole name;
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role)) return false;
+        return roleId != null && roleId.equals(((Role) o).roleId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

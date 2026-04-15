@@ -2,14 +2,13 @@ package com.Kalana.HireHub.model;
 
 import com.Kalana.HireHub.model.enums.ApplicationStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,4 +28,18 @@ public class Application {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ApplicationStatus applicationStatus;
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Application)) return false;
+        return applicationId != null && applicationId.equals(((Application) o).applicationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
