@@ -7,4 +7,5 @@ import java.io.IOException;
 
 public interface ApplicationService {
     ApplicationDTO apply(Long jobId, MultipartFile resume) throws IOException;
+    ApplicationDTO changeStatus(ApplicationDTO applicationDTO);
 }

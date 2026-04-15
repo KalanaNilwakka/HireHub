@@ -1,6 +1,7 @@
 package com.Kalana.HireHub.service.impl;
 
 import com.Kalana.HireHub.dto.ApplicationDTO;
+import com.Kalana.HireHub.exception.ApplicationNotFoundException;
 import com.Kalana.HireHub.exception.JobNotFoundException;
 import com.Kalana.HireHub.exception.UserNotFoundException;
 import com.Kalana.HireHub.model.Application;
@@ -64,6 +65,38 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setJob(job);
         application.setResumeLink(path);
         application.setApplicationStatus(ApplicationStatus.PENDING);
+
+        return modelMapper.map(applicationRepository.save(application),ApplicationDTO.class);
+    }
+
+    @Override
+    public ApplicationDTO changeStatus(ApplicationDTO applicationDTO) {
+        Application application = applicationRepository.findById(applicationDTO.getApplicationId())
+                .orElseThrow(() -> new ApplicationNotFoundException(applicationDTO.getApplicationId()));
+
+        ApplicationStatus status = ApplicationStatus.valueOf(applicationDTO.getApplicationStatus());
+
+        if (application.getApplicationStatus() != ApplicationStatus.PENDING)
+            throw new RuntimeException("Application already processed");
+
+        Job job = application.getJob();
+
+        switch (status){
+            case APPROVED:
+                if (job.getNumberOfPositions() <= 0)
+                    throw new RuntimeException("No positions available");
+
+                job.setNumberOfPositions(job.getNumberOfPositions()-1);
+                jobRepository.save(job);
+
+                application.setApplicationStatus(ApplicationStatus.APPROVED);
+                break;
+            case REJECTED:
+                application.setApplicationStatus(ApplicationStatus.REJECTED);
+                break;
+            default:
+                throw new RuntimeException("Invalid application status");
+        }
 
         return modelMapper.map(applicationRepository.save(application),ApplicationDTO.class);
     }
