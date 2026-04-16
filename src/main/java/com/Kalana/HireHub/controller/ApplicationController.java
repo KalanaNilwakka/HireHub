@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/applications")
@@ -32,6 +33,13 @@ public class ApplicationController {
     public ResponseEntity<CRUDRepositoryDTO<ApplicationDTO>> changeStatus(@RequestBody ApplicationDTO applicationDTO){
         return ResponseEntity.ok(new CRUDRepositoryDTO<>(
                 true,"Application status successfully updated",applicationService.changeStatus(applicationDTO)
+        ));
+    }
+
+    @GetMapping("/job/{jobId}")
+    public ResponseEntity<CRUDRepositoryDTO<Set<ApplicationDTO>>> getApplicationsByJob(@PathVariable Long jobId){
+        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
+                true,"List retrieved successfully",applicationService.getApplicationsByJob(jobId)
         ));
     }
 }
