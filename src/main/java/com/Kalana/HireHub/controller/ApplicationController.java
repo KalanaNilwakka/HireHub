@@ -42,4 +42,11 @@ public class ApplicationController {
                 true,"List retrieved successfully",applicationService.getApplicationsByJob(jobId)
         ));
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<CRUDRepositoryDTO<Set<ApplicationDTO>>> getApplicationsByUser(@PathVariable Long userId){
+        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
+                true,"List retrieved successfully",applicationService.getApplicationsByUser(userId)
+        ));
+    }
 }
