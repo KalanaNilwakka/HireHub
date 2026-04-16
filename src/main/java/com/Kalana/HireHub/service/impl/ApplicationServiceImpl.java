@@ -109,4 +109,11 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .stream().map(application -> modelMapper.map(application,ApplicationDTO.class))
                 .collect(Collectors.toSet());
     }
+
+    @Override
+    public Set<ApplicationDTO> getApplicationsByUser(Long userId) {
+        return applicationRepository.findByUser_UserId(userId)
+                .stream().map(application -> modelMapper.map(application,ApplicationDTO.class))
+                .collect(Collectors.toSet());
+    }
 }

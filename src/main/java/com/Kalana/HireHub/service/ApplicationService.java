@@ -10,4 +10,5 @@ public interface ApplicationService {
     ApplicationDTO apply(Long jobId, MultipartFile resume) throws IOException;
     ApplicationDTO changeStatus(ApplicationDTO applicationDTO);
     Set<ApplicationDTO> getApplicationsByJob(Long jobId);
+    Set<ApplicationDTO> getApplicationsByUser(Long jobId);
 }
