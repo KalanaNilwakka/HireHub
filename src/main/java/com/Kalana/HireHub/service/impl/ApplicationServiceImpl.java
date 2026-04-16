@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
@@ -99,5 +101,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
 
         return modelMapper.map(applicationRepository.save(application),ApplicationDTO.class);
+    }
+
+    @Override
+    public Set<ApplicationDTO> getApplicationsByJob(Long jobId) {
+        return applicationRepository.findByJob_JobId(jobId)
+                .stream().map(application -> modelMapper.map(application,ApplicationDTO.class))
+                .collect(Collectors.toSet());
     }
 }
