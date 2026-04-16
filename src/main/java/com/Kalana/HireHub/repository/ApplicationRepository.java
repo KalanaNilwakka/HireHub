@@ -12,4 +12,5 @@ import java.util.Set;
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     Boolean existsByUserAndJob(User user, Job job);
     Set<Application> findByJob_JobId(Long jobId);
+    Set<Application> findByUser_UserId(Long userId);
 }
