@@ -24,6 +24,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserExistsException.class)
     @ResponseBody
     public ResponseEntity<String> handleUserExistsException(UserExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ApplicationNotFoundException.class)
+    @ResponseBody
+    public ResponseEntity<String> handleApplicationNotFoundException(ApplicationNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
