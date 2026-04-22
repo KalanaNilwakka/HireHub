@@ -3,6 +3,7 @@ package com.Kalana.HireHub.controller;
 import com.Kalana.HireHub.dto.ApplicationDTO;
 import com.Kalana.HireHub.dto.CRUDRepositoryDTO;
 import com.Kalana.HireHub.service.ApplicationService;
+import com.Kalana.HireHub.util.CommonUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,9 +18,11 @@ import java.util.Set;
 public class ApplicationController {
 
     private final ApplicationService applicationService;
+    private final CommonUtils commonUtils;
 
-    public ApplicationController(ApplicationService applicationService) {
+    public ApplicationController(ApplicationService applicationService, CommonUtils commonUtils) {
         this.applicationService = applicationService;
+        this.commonUtils = commonUtils;
     }
 
     @PostMapping("/apply/{jobId}")
@@ -51,6 +54,14 @@ public class ApplicationController {
     public ResponseEntity<CRUDRepositoryDTO<Set<ApplicationDTO>>> getApplicationsByUser(@PathVariable Long userId){
         return ResponseEntity.ok(new CRUDRepositoryDTO<>(
                 true,"List retrieved successfully",applicationService.getApplicationsByUser(userId)
+        ));
+    }
+
+    @GetMapping
+    public ResponseEntity<CRUDRepositoryDTO<Set<ApplicationDTO>>> getApplicationsByLoggedInUser(){
+        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
+                true,"List retrieved successfully"
+                ,applicationService.getApplicationsByUser(commonUtils.getLoggedInUser().getUserId())
         ));
     }
 }
