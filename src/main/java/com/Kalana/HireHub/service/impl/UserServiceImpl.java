@@ -81,6 +81,8 @@ public class UserServiceImpl implements UserService {
             user.setFirstName(updateUserDTO.getFirstName());
         if (updateUserDTO.getLastName() != null)
             user.setLastName(updateUserDTO.getLastName());
+        if (updateUserDTO.getEmail() != null)
+            user.setEmail(updateUserDTO.getEmail());
         return modelMapper.map(userRepository.save(user),UserDTO.class);
     }
 

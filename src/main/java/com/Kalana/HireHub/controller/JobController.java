@@ -3,7 +3,9 @@ package com.Kalana.HireHub.controller;
 import com.Kalana.HireHub.dto.CRUDRepositoryDTO;
 import com.Kalana.HireHub.dto.JobDTO;
 import com.Kalana.HireHub.service.JobService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -18,8 +20,9 @@ public class JobController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('HR') or hasRole('ADMIN')")
     public ResponseEntity<CRUDRepositoryDTO<JobDTO>> createJob(@RequestBody JobDTO jobDTO) {
-        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
+        return ResponseEntity.status(HttpStatus.CREATED).body(new CRUDRepositoryDTO<>(
                 true, "Job created successfully",  jobService.createJob(jobDTO)
         ));
     }

@@ -4,7 +4,9 @@ import com.Kalana.HireHub.dto.CRUDRepositoryDTO;
 import com.Kalana.HireHub.dto.UpdateUserDTO;
 import com.Kalana.HireHub.dto.UserDTO;
 import com.Kalana.HireHub.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
@@ -18,10 +20,11 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('HR') or hasRole('ADMIN')")
     public ResponseEntity<CRUDRepositoryDTO<UserDTO>> createUser(@RequestBody UserDTO userDTO){
-        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
-                true,"User created successfully!",userService.createUser(userDTO)
-        ));
+        return new ResponseEntity<>(new CRUDRepositoryDTO<>(
+                true,"User created successfully!",userService.createUser(userDTO)), HttpStatus.CREATED
+        );
     }
 
     @PatchMapping
@@ -32,6 +35,7 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CRUDRepositoryDTO<Set<UserDTO>>> getAllUsers(){
         return ResponseEntity.ok(new CRUDRepositoryDTO<>(
                 true,"User list retrieved successfully", userService.getUsers()

@@ -5,7 +5,6 @@ import com.Kalana.HireHub.security.jwt.JwtUtil;
 import com.Kalana.HireHub.security.user.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -38,9 +37,6 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/users").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/users").authenticated()
-//                        .requestMatchers("/api/users").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(
