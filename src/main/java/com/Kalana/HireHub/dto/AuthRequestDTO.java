@@ -6,26 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class UserDTO {
-    private Long userId;
-
-    @NotNull
-    private String firstName;
-
-    @NotNull
-    private String lastName;
+public class AuthRequestDTO {
 
     @NotNull
     @Email
-    private String email;
+    private String username;
 
     @NotNull
     private String password;
-
-    private Set<String> userRoles;
 }
