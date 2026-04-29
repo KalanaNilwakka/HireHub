@@ -16,7 +16,5 @@ public class ApplicationDTO {
 
     private Long jobId;
 
-    private String resumeLink;
-
     private String applicationStatus;
 }

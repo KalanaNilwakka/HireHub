@@ -12,6 +12,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
 public class UserController {
     private final UserService userService;
 
@@ -20,14 +21,14 @@ public class UserController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('HR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CRUDRepositoryDTO<UserDTO>> createUser(@RequestBody UserDTO userDTO){
         return new ResponseEntity<>(new CRUDRepositoryDTO<>(
                 true,"User created successfully!",userService.createUser(userDTO)), HttpStatus.CREATED
         );
     }
 
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<CRUDRepositoryDTO<UserDTO>> updateUser(@RequestBody UpdateUserDTO updateUserDTO){
         return ResponseEntity.ok(new CRUDRepositoryDTO<>(
                 true,"User updated successfully", userService.updateUser(updateUserDTO)

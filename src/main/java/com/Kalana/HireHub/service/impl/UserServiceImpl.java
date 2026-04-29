@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -50,12 +51,12 @@ public class UserServiceImpl implements UserService {
             } else {
                 userDTO.getUserRoles().forEach(role -> {
                     switch (role) {
-                        case "ADMIN":
+                        case "ROLE_ADMIN":
                             Role adminRole = roleRepository.findByName(UserRole.ROLE_ADMIN)
                                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                             roles.add(adminRole);
                             break;
-                        case "HR":
+                        case "ROLE_HR":
                             Role hrRole = roleRepository.findByName(UserRole.ROLE_HR)
                                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                             roles.add(hrRole);
@@ -68,7 +69,9 @@ public class UserServiceImpl implements UserService {
                 });
             }
             user.setUserRoles(roles);
-            return modelMapper.map(userRepository.save(user), UserDTO.class);
+            User savedUser = userRepository.save(user);
+            savedUser.setPassword("");
+            return modelMapper.map(savedUser, UserDTO.class);
         } else {
             throw new UserExistsException(userDTO.getEmail());
         }
@@ -87,16 +90,28 @@ public class UserServiceImpl implements UserService {
     }
 
     public Set<UserDTO> getUsers() {
-        return userRepository.findAll()
-                .stream().map(user -> modelMapper.map(user, UserDTO.class))
-                .collect(Collectors.toSet()
-        );
+        List<User> users = userRepository.findAll();
+        return users.stream().map(user -> {
+            UserDTO dto = modelMapper.map(user, UserDTO.class);
+            dto.setPassword("");
+            Set<String> roles = user.getUserRoles()
+                    .stream()
+                    .map(role -> role.getName().name())
+                    .collect(Collectors.toSet());
+            dto.setUserRoles(roles);
+            return dto;
+        }).collect(Collectors.toSet());
     }
 
     public UserDTO getUserById(Long id) {
-        return userRepository.findById(id)
-                .map(user -> modelMapper.map(user, UserDTO.class))
+        User user =  userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
+        user.setPassword("");
+        UserDTO dto = modelMapper.map(user, UserDTO.class);
+        dto.setUserRoles(user.getUserRoles().stream()
+                .map(role -> role.getName().name())
+                .collect(Collectors.toSet()));
+        return dto;
     }
 
     public UserDTO getUserByEmail(String email) {
