@@ -10,6 +10,9 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class AuthResponseDTO {
+    private Long userId;
+    private String firstName;
+    private String lastName;
     private String token;
     private List<String> userRoles;
 }
