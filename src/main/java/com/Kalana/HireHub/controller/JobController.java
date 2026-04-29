@@ -12,6 +12,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/jobs")
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
 public class JobController {
     private final JobService jobService;
 
