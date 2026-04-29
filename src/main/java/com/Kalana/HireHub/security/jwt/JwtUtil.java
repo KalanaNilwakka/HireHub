@@ -3,6 +3,7 @@ package com.Kalana.HireHub.security.jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,8 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "q7wZL1q3g0mL8xk4W7yB9pR2tE5uC1fV6jN0hT8sQ2vK9dM4bF3pJ1rG7yD5xA9";
+    @Value("${app.secretKey}")
+    private String SECRET_KEY;
 
     public String generateToken(UserDetails userDetails){
         return Jwts.builder()
