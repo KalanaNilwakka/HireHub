@@ -1,6 +1,5 @@
 package com.Kalana.HireHub.dto;
 
-import com.Kalana.HireHub.model.Application;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +22,5 @@ public class JobDTO {
     @NotNull
     private int numberOfPositions;
 
-    private Set<Application>  applications;
+    private Set<ApplicationDTO>  applications;
 }
