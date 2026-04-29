@@ -107,7 +107,11 @@ public class UserServiceImpl implements UserService {
         User user =  userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
         user.setPassword("");
-        return modelMapper.map(user, UserDTO.class);
+        UserDTO dto = modelMapper.map(user, UserDTO.class);
+        dto.setUserRoles(user.getUserRoles().stream()
+                .map(role -> role.getName().name())
+                .collect(Collectors.toSet()));
+        return dto;
     }
 
     public UserDTO getUserByEmail(String email) {
