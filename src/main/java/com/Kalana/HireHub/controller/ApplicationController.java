@@ -4,7 +4,10 @@ import com.Kalana.HireHub.dto.ApplicationDTO;
 import com.Kalana.HireHub.dto.CRUDRepositoryDTO;
 import com.Kalana.HireHub.service.ApplicationService;
 import com.Kalana.HireHub.util.CommonUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/applications")
+@CrossOrigin(origins = "http://localhost:3000",maxAge = 3600)
 public class ApplicationController {
 
     private final ApplicationService applicationService;
@@ -50,7 +54,6 @@ public class ApplicationController {
     }
 
     @GetMapping("/user/{userId}")
-    @PreAuthorize("hasRole('HR') or hasRole('ADMIN')")
     public ResponseEntity<CRUDRepositoryDTO<Set<ApplicationDTO>>> getApplicationsByUser(@PathVariable Long userId){
         return ResponseEntity.ok(new CRUDRepositoryDTO<>(
                 true,"List retrieved successfully",applicationService.getApplicationsByUser(userId)
@@ -62,6 +65,22 @@ public class ApplicationController {
         return ResponseEntity.ok(new CRUDRepositoryDTO<>(
                 true,"List retrieved successfully"
                 ,applicationService.getApplicationsByUser(commonUtils.getLoggedInUser().getUserId())
+        ));
+    }
+
+    @GetMapping("/{applicationId}/resume")
+    public ResponseEntity<Resource> resume(@PathVariable Long  applicationId){
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"resume.pdf\"")
+                .body(applicationService.getResume(applicationId));
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('HR')")
+    public ResponseEntity<CRUDRepositoryDTO<Set<ApplicationDTO>>> getAllApplications(){
+        return ResponseEntity.ok(new CRUDRepositoryDTO<>(
+                true,"List retrieved successfully",applicationService.getAllApplications()
         ));
     }
 }

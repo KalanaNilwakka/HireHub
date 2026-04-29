@@ -15,10 +15,15 @@ import com.Kalana.HireHub.service.ApplicationService;
 import com.Kalana.HireHub.service.FileStorageService;
 import com.Kalana.HireHub.util.CommonUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -114,6 +119,27 @@ public class ApplicationServiceImpl implements ApplicationService {
     public Set<ApplicationDTO> getApplicationsByUser(Long userId) {
         return applicationRepository.findByUser_UserId(userId)
                 .stream().map(application -> modelMapper.map(application,ApplicationDTO.class))
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Resource getResume(Long applicationId) {
+        Application application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new ApplicationNotFoundException(applicationId));
+
+        Path path = Paths.get(application.getResumeLink());
+        try {
+            Resource resource = new UrlResource(path.toUri());
+            return resource;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Set<ApplicationDTO> getAllApplications() {
+        return applicationRepository.findAll().stream()
+                .map(application -> modelMapper.map(application,ApplicationDTO.class))
                 .collect(Collectors.toSet());
     }
 }
