@@ -24,7 +24,6 @@ public class UserDTO {
     @Email
     private String email;
 
-    @NotNull
     private String password;
 
     private Set<String> userRoles;
