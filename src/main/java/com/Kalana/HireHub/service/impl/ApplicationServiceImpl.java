@@ -1,6 +1,7 @@
 package com.Kalana.HireHub.service.impl;
 
 import com.Kalana.HireHub.dto.ApplicationDTO;
+import com.Kalana.HireHub.exception.ApplicationAlreadyApprovedException;
 import com.Kalana.HireHub.exception.ApplicationNotFoundException;
 import com.Kalana.HireHub.exception.JobNotFoundException;
 import com.Kalana.HireHub.exception.UserNotFoundException;
@@ -84,7 +85,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         ApplicationStatus status = ApplicationStatus.valueOf(applicationDTO.getApplicationStatus());
 
         if (application.getApplicationStatus() != ApplicationStatus.PENDING)
-            throw new RuntimeException("Application already processed");
+            throw new ApplicationAlreadyApprovedException(applicationDTO.getApplicationId());
 
         Job job = application.getJob();
 

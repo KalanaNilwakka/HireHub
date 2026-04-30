@@ -32,4 +32,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleApplicationNotFoundException(ApplicationNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(ApplicationAlreadyApprovedException.class)
+    @ResponseBody
+    public ResponseEntity<String> handleApplicationAlreadyApprovedException(ApplicationAlreadyApprovedException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
 }
